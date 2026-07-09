@@ -7,7 +7,7 @@ from sqlalchemy import (
     func
 )
 
-from database.base import (
+from database import (
     Base
 )
 
