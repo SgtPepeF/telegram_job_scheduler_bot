@@ -8,10 +8,11 @@ from database import SessionLocal
 from .models import Command
 
 
-def create_task(creation_kwargs):
+def create_task(kwargs):
     creation_kwargs = dict()
+
     for field in Command.__table__.columns.keys():
-        if (query_param := creation_kwargs.get(field)):
+        if (query_param := kwargs.get(field)):
             creation_kwargs[field] = query_param
 
     with SessionLocal() as session:
@@ -23,13 +24,19 @@ def create_task(creation_kwargs):
 
 
 def get_regular_tasks():
-    return select(Command).where(
+    query = select(Command).where(
         Command.regular_task
     )
+    with SessionLocal() as session:
+        tasks = session.scalars(query).all()
+    return tasks
 
 
 def get_actual_tasks():
     current_time = datetime.now()
-    return select(Command).where(
+    query = select(Command).where(
         Command.execute_dttm >= current_time
     )
+    with SessionLocal() as session:
+        tasks = session.scalars(query).all()
+    return tasks

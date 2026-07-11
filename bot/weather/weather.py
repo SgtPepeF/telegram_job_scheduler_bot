@@ -1,9 +1,8 @@
-import os
 from datetime import datetime
 from http import HTTPStatus
 import requests
 
-from dotenv import load_dotenv
+from settings import OPEN_WEATHER_API_TOKEN
 
 from .constants import (
     BASE_OPEN_WEATHER_API_URL,
@@ -14,16 +13,9 @@ from .utils import (
     compass_direction,
 )
 
-load_dotenv()
-
-API_TOKEN = os.getenv(
-    'API_TOKEN',
-    'put your OpenWeatherMap token here or set its value in .env file.'
-)
-
 
 def get_openweather_url(city='perm', lon=57.999191, lat=56.274835):
-    url = f'{BASE_OPEN_WEATHER_API_URL}?appid={API_TOKEN}&lang=ru&units=metric'
+    url = f'{BASE_OPEN_WEATHER_API_URL}?appid={OPEN_WEATHER_API_TOKEN}&lang=ru&units=metric'
     if city:
         return f'{url}&q={city}'
     elif lon and lat:

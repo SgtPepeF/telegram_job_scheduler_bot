@@ -1,7 +1,3 @@
-from sqlalchemy import (
-    select,
-)
-
 from .models import User
 from . import SessionLocal
 
@@ -11,7 +7,28 @@ USER_OPTIONAL_FIELDS = {'username', }
 USER_SEARCH_FIELDS = {'id', 'user_telegram_id', }
 
 
+def get_user(user_kwargs):
+    search_kwargs = dict()
+    for search_field in USER_SEARCH_FIELDS:
+        if (query_param := user_kwargs.get(search_field)):
+            search_kwargs[search_field] = query_param
+
+    if search_kwargs:
+        with SessionLocal() as session:
+            return session.query(User).filter_by(
+                **search_kwargs
+            ).first()
+    raise KeyError('Wrong query params')
+
+
 def create_user(user_kwargs):
+
+    # check if user alredy exists:
+    existing_user = get_user(user_kwargs)
+
+    if existing_user:
+        raise ValueError('User alredy exists.')
+
     creation_kwargs = dict()
     for required_field in USER_REQUIRED_FIELDS:
         if (query_param := user_kwargs.get(required_field)):
@@ -30,19 +47,6 @@ def create_user(user_kwargs):
         session.commit()
         session.refresh(user)
     return user
-
-
-def get_user(user_kwargs):
-    search_kwargs = dict()
-    for search_field in USER_SEARCH_FIELDS:
-        if (query_param := user_kwargs.get(search_field)):
-            search_kwargs[search_field] = query_param
-
-    if search_kwargs:
-        return select(User).filter_by(
-            **search_kwargs
-        ).first()
-    raise KeyError('Wrong query params')
 
 
 def delete_user(user_kwargs):
