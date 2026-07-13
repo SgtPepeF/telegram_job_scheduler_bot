@@ -4,24 +4,25 @@ from database import SessionLocal
 from .models import UserLocation
 
 
-def create_location(creation_kwargs):
+def get_user_location(user_id):
+    query = select(UserLocation).where(
+        UserLocation.user_id == user_id
+    ).first()
+    with SessionLocal() as session:
+        return session.scalar(query)
+
+
+def create_location(location_kwargs):
     creation_kwargs = dict()
     for field in UserLocation.__table__.columns.keys():
-        if (query_param := creation_kwargs.get(field)):
+        if (query_param := location_kwargs.get(field)):
             creation_kwargs[field] = query_param
 
     with SessionLocal() as session:
         task = UserLocation(**creation_kwargs)
-        session.add(task)
+        session.merge(task)
         session.commit()
-        session.refresh(task)
     return task
-
-
-def get_user_location(user_id):
-    return select(UserLocation).where(
-        UserLocation.user_id == user_id
-    ).first()
 
 
 def update_user_location(user_id, update_kwargs):

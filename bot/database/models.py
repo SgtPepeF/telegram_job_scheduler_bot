@@ -10,6 +10,5 @@ from . import (
 class User(Base):
     __tablename__ = 'user'
 
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(Integer(), primary_key=True)
     username: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
-    user_telegram_id: Mapped[int] = mapped_column(Integer(), unique=True, nullable=False)

@@ -12,14 +12,8 @@ from scheduler.queries import (
 
 from telegram_bot.commands import (
     send_message,
-    bot_send_forecat
+    REGISTERED_BOT_COMMANDS
 )
-
-
-TASKS_MAP = {
-    send_message.__name__: send_message,
-    bot_send_forecat.__name__: bot_send_forecat,
-}
 
 
 def set_up_schedule():
@@ -29,9 +23,11 @@ def set_up_schedule():
     tasks = regular_tasks + actual_tasks
 
     for task in tasks:
-        function_to_schedule = TASKS_MAP.get(task.function)
+        function_to_schedule = REGISTERED_BOT_COMMANDS.get(
+            task.function
+        )
         if not function_to_schedule:
-            print('No Task named task.function')
+            print(f'No Task named {task.function}')
             continue
         schedule_task(
             function_to_schedule,
@@ -55,7 +51,7 @@ def set_up_schedule():
         execute_dttm=greeting_time,
         arguments={
             'user_id': ADMIN_TELEGRAM_ID,
-            'text': greeting_text
+            'argument': greeting_text
         },
         regular_task=False
     )

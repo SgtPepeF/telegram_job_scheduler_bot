@@ -2,9 +2,9 @@ from .models import User
 from . import SessionLocal
 
 
-USER_REQUIRED_FIELDS = {'user_telegram_id', }
+USER_REQUIRED_FIELDS = {'user_id', }
 USER_OPTIONAL_FIELDS = {'username', }
-USER_SEARCH_FIELDS = {'id', 'user_telegram_id', }
+USER_SEARCH_FIELDS = {'user_id', 'username', }
 
 
 def get_user(user_kwargs):

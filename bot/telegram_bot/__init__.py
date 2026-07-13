@@ -1,1 +1,1 @@
-from . import bot, commands
+from . import bot, commands, message_handlers

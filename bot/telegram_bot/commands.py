@@ -1,31 +1,57 @@
+"""File containing bot commands.
+
+Note that EVERY bot command should have only 2 arguments:
+    - user_telegtam_id for user to send message to
+    - another STRING argument
+
+every function must be registered to be used.
+"""
+
+from weather.queries import get_user_location
+from weather.weather import forecast
+
 from .bot import telegtam_bot
 
 
-from weather.weather import forecast
-
-
-# Looks unnecessary, but now we can schedule messaging.
-def send_message(user_id, text):
+# Looks unnecessary, but with it can schedule messaging.
+def send_message(user_id, argument):
     telegtam_bot.send_message(
         chat_id=user_id,
-        text=text
+        text=argument
     )
 
 
-def bot_send_forecat(user_id, city='perm'):
+def send_forecat(user_id, argument='perm'):
     """Sends a forecast to a chosen user."""
-    TEXT_REPLY = forecast(city=city)
+    if not argument:
+        argument = get_user_location(user_id)
+    TEXT_REPLY = forecast(city=argument)
     send_message(user_id, TEXT_REPLY)
 
 
-@telegtam_bot.message_handler(commands=('forecast', 'погода'))
-def reply_forecast(message):
-    return bot_send_forecat(
-        user_id=message.from_user.id
-    )
+def send_help(user_id, argument=None):
+    HELP_TEXT = f"""
+    Я -- бот-планировщик Ваших задач🤖⏱️
+
+    Возможности бота:
+     • Прогноз погоды по запросу;
+     • Запланировать разовое/регулярное сообщение;
+     • Запланировать разовое/регулярное действие из списка доступных действий бота.
+     • Трекер рабочего времени (в разработке).
+
+    
+
+    Доступные команды:
+    """.replace('    ','')
+    send_message(user_id, HELP_TEXT)
 
 
-@telegtam_bot.message_handler(content_types=('text',))
-def common_reply(message):
-    TEXT_REPLY = """Команда не распознана."""
-    telegtam_bot.reply_to(message, TEXT_REPLY)
+REGISTERED_BOT_COMMANDS = {
+    send_message.__name__: send_message,
+    'message': send_message,
+    'сообщение': send_message,
+    send_forecat.__name__: send_forecat,
+    'forecast': send_forecat,
+    'погода': send_forecat,
+    'прогноз': send_forecat,
+}

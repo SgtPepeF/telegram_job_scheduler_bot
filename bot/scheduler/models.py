@@ -10,7 +10,7 @@ from sqlalchemy import (
 from database import (
     Base
 )
-
+ 
 
 class Command(Base):
     __tablename__ = 'command'
@@ -30,7 +30,7 @@ class Command(Base):
         onupdate=func.now()
     )
     author_id: Mapped[int] = mapped_column(
-        ForeignKey('user.id')
+        ForeignKey('user.user_id')
     )
     regular_task: Mapped[bool] = mapped_column(
         Boolean,

@@ -2,8 +2,10 @@ from datetime import datetime
 from http import HTTPStatus
 import requests
 
-from settings import OPEN_WEATHER_API_TOKEN
-
+from settings import (
+    OPEN_WEATHER_API_TOKEN,
+    DEFAULT_OPENWEATHER_REGION,
+)
 from .constants import (
     BASE_OPEN_WEATHER_API_URL,
     DAYTIME_FORMAT,
@@ -26,7 +28,7 @@ def get_openweather_url(city='perm', lon=57.999191, lat=56.274835):
     )
 
 
-def forecast(city='perm') -> str:
+def forecast(city=DEFAULT_OPENWEATHER_REGION) -> str:
     """Gets and parses weather_api response constructing a bot message."""
 
     current_dttm = datetime.now()
@@ -55,6 +57,7 @@ def forecast(city='perm') -> str:
     tempreture_experienced = round(data['main']['feels_like'])
 
     pressure = data['main']['pressure']
+    pressure = round(pressure * 0.75006)  # to turn hPa into mmHg
     humidity = data['main']['humidity']
     wind_speed = data['wind']['speed']
     wind_deg = data['wind']['deg']
@@ -74,7 +77,7 @@ def forecast(city='perm') -> str:
         Влажность: {humidity}%
         Ветер: [{wind_direction}] {wind_speed} м/с
         Давление: {pressure} мм.рт.ст.
-        Световой день: {sunrise} -- {sunset}.
+        Световой день: ☀️{sunrise} -- 🌌{sunset}.
     """.replace('    ', '')
 
 
