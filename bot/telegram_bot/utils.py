@@ -31,7 +31,11 @@ def parse_datetime_string(string, periods, sep=' ') -> dict:
 
 
 def pop_first_word(string):
-    return string.split(' ', 1)
+    splitted_string = string.split(' ', 1)
+    # end of the line
+    if len(splitted_string) < 2:
+        splitted_string.append(None)
+    return splitted_string
 
 
 def parse_command(text_command) -> tuple:

@@ -7,7 +7,7 @@ from .models import UserLocation
 def get_user_location(user_id):
     query = select(UserLocation).where(
         UserLocation.user_id == user_id
-    ).first()
+    )
     with SessionLocal() as session:
         return session.scalar(query)
 
@@ -19,10 +19,10 @@ def create_location(location_kwargs):
             creation_kwargs[field] = query_param
 
     with SessionLocal() as session:
-        task = UserLocation(**creation_kwargs)
-        session.merge(task)
+        location = UserLocation(**creation_kwargs)
+        session.merge(location)
         session.commit()
-    return task
+    return location
 
 
 def update_user_location(user_id, update_kwargs):

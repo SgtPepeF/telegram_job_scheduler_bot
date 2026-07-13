@@ -23,12 +23,6 @@ def get_user(user_kwargs):
 
 def create_user(user_kwargs):
 
-    # check if user alredy exists:
-    existing_user = get_user(user_kwargs)
-
-    if existing_user:
-        raise ValueError('User alredy exists.')
-
     creation_kwargs = dict()
     for required_field in USER_REQUIRED_FIELDS:
         if (query_param := user_kwargs.get(required_field)):
@@ -43,14 +37,13 @@ def create_user(user_kwargs):
 
     with SessionLocal() as session:
         user = User(**creation_kwargs)
-        session.add(user)
+        session.merge(user)
         session.commit()
-        session.refresh(user)
     return user
 
 
 def delete_user(user_kwargs):
     user = get_user(user_kwargs)
-    with SessionLocal as session:
+    with SessionLocal() as session:
         session.delete(user)
         session.commit()

@@ -10,7 +10,7 @@ from sqlalchemy import (
 from database import (
     Base
 )
- 
+
 
 class Command(Base):
     __tablename__ = 'command'
