@@ -8,7 +8,7 @@
 • Планирование разовое/регулярное действий из списка доступных действий бота;  
 • рекер рабочего времени (в разработке).  
 
-
+![git_images/telegram_bot_preview.jpg](https://github.com/SgtPepeF/telegram_job_scheduler_bot/blob/51e023398b06fc893be40e3f0a6862cdf90f5cf2/git_images/telegram_bot_preview.jpg)
 
 ## Запуск и настройка проекта.
 
@@ -45,3 +45,5 @@ python bot/populate_db.py
 python bot/main.py
 ```
 Начните общение с ботом в чате телеграма с команды ```/start```. Бот отправит Вам дальнейшие инструкции по работе с ним.
+
+![/stert example](https://github.com/SgtPepeF/telegram_job_scheduler_bot/blob/51e023398b06fc893be40e3f0a6862cdf90f5cf2/git_images/boot_greeting_message.jpg)
