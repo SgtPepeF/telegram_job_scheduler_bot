@@ -11,9 +11,9 @@ def register_models():
             importlib.import_module(f'{app}.models')
         except ModuleNotFoundError:
             pass
+    Base.metadata.create_all(bind=database_engine)
 
 
 if __name__ == "__main__":
 
     register_models()
-    Base.metadata.create_all(bind=database_engine)

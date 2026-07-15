@@ -3,7 +3,6 @@ from http import HTTPStatus
 import requests
 
 from settings import (
-    OPEN_WEATHER_API_TOKEN,
     DEFAULT_OPENWEATHER_REGION,
 )
 from .constants import (
@@ -12,20 +11,9 @@ from .constants import (
     DTTM_FORMAT,
 )
 from .utils import (
+    get_openweather_url,
     compass_direction,
 )
-
-
-def get_openweather_url(city='perm', lon=57.999191, lat=56.274835):
-    url = f'{BASE_OPEN_WEATHER_API_URL}?appid={OPEN_WEATHER_API_TOKEN}&lang=ru&units=metric'
-    if city:
-        return f'{url}&q={city}'
-    elif lon and lat:
-        return f'{url}&lat={lat}&lon={lon}'
-
-    raise LookupError(
-        'url must contain either city name or lon and lat of location.'
-    )
 
 
 def forecast(city=DEFAULT_OPENWEATHER_REGION) -> str:

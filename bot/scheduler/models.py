@@ -1,14 +1,18 @@
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import (
-    ForeignKey, Integer, String, DateTime, JSON, Boolean,
+    ForeignKey, Integer, String,
+    DateTime, Interval, JSON, Boolean,
     func
 )
 
 from database import (
     Base
+)
+from .constants import (
+    SERVER_TIMEZONE,
 )
 
 
@@ -48,4 +52,21 @@ class Command(Base):
     arguments: Mapped[dict] = mapped_column(
         JSON,
         nullable=True
+    )
+
+
+class UserTimezone(Base):
+    __tablename__ = 'user_timezone'
+
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey('user.user_id'),
+        primary_key=True
+    )
+    user_timezone: Mapped[timedelta] = mapped_column(
+        Interval,
+        default=SERVER_TIMEZONE
+    )
+    user_server_timedelta: Mapped[timedelta] = mapped_column(
+        Interval,
+        default=timedelta(0)
     )

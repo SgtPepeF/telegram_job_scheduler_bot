@@ -1,0 +1,4 @@
+services:
+  scheduler_bot:
+    image: sgtpepe/telegram_schedulebot
+    env_file: .env

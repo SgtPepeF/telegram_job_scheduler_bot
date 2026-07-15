@@ -5,7 +5,8 @@ from sqlalchemy import (
 )
 
 from database import SessionLocal
-from .models import Command
+from .models import Command, UserTimezone
+from .constants import SERVER_TIMEZONE
 
 
 def get_task(task_id):
@@ -80,3 +81,24 @@ def get_user_tasks(author_id):
     with SessionLocal() as session:
         tasks = session.scalars(query).all()
     return tasks
+
+
+def get_user_timezone(user_id):
+    with SessionLocal() as session:
+        user_timezone = session.query(UserTimezone).filter_by(
+            user_id=user_id
+        ).first()
+    return user_timezone
+
+
+def create_user_timezone(user_id, user_timedelta):
+    with SessionLocal() as session:
+        user_server_timedelta = user_timedelta - SERVER_TIMEZONE
+        timezone = UserTimezone(
+            user_id=user_id,
+            user_timezone=user_timedelta,
+            user_server_timedelta=user_server_timedelta
+        )
+        session.merge(timezone)
+        session.commit()
+    return timezone

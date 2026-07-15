@@ -3,8 +3,7 @@ from . import SessionLocal
 
 
 USER_REQUIRED_FIELDS = {'user_id', }
-USER_OPTIONAL_FIELDS = {'username', }
-USER_SEARCH_FIELDS = {'user_id', 'username', }
+USER_SEARCH_FIELDS = {'user_id', }
 
 
 def get_user(user_kwargs):
@@ -30,10 +29,6 @@ def create_user(user_kwargs):
 
     if not creation_kwargs:
         raise ValueError('Missing required kwargs')
-
-    for optional_field in USER_OPTIONAL_FIELDS:
-        if (query_param := user_kwargs.get(optional_field)):
-            creation_kwargs[optional_field] = query_param
 
     with SessionLocal() as session:
         user = User(**creation_kwargs)

@@ -1,4 +1,5 @@
 DATETIME_FORMAT = '%H:%M %d.%m.%Y'
+TIME_FORMAT = '%H:%M'
 
 DATE_REGEXP_FORMATS = {
     r'\d{2}\.\d{2}',  # DD.MM
