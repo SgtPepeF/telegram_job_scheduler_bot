@@ -6,7 +6,7 @@
 • Отправка прогноз погоды по запросу;  
 • Планирование разовое/регулярное сообщений;  
 • Планирование разовое/регулярное действий из списка доступных действий бота;  
-• рекер рабочего времени (в разработке).  
+• Трекер рабочего времени (в разработке).  
 
 ![git_images/telegram_bot_preview.jpg](https://github.com/SgtPepeF/telegram_job_scheduler_bot/blob/51e023398b06fc893be40e3f0a6862cdf90f5cf2/git_images/telegram_bot_preview.jpg)
 
