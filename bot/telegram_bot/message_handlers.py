@@ -11,6 +11,7 @@ from scheduler.queries import (
 )
 from scheduler.actions import (
     schedule_task,
+    unschedule_task,
     get_user_server_timedelta,
     get_task_text_representation
 )
@@ -202,6 +203,7 @@ def plan_action(message):
     )
 
     schedule_task(
+        task_id=str(task.id),
         function=function_to_execute,
         execute_dttm=server_execution_time,
         arguments=execution_arguments,
@@ -228,7 +230,7 @@ def plan_action(message):
 def list_actions(message):
     tasks = get_user_tasks(message.from_user.id)
     if not tasks:
-        send_message(
+        return send_message(
             message.from_user.id,
             'У Вас нет запланированных задач.'
         )
@@ -238,7 +240,7 @@ def list_actions(message):
         task_text_representation = get_task_text_representation(task)
         reply_text += f'\n{task_text_representation}'
     reply_text = reply_text.replace('    ', '')
-    send_message(
+    return send_message(
         message.from_user.id,
         reply_text
     )
@@ -283,6 +285,7 @@ def delete_action(message):
                 'Это не Ваша задача. Задачу может удалить только её автор.'
             )
         )
+    unschedule_task(str(task_id))
     delete_task(task_id)
     return send_message(
         message.from_user.id,
@@ -292,7 +295,7 @@ def delete_action(message):
     )
 
 
-@telegtam_bot.message_handler(content_types=['text'])
-def common_reply(message):
-    TEXT_REPLY = """Команда не распознана."""
-    telegtam_bot.reply_to(message, TEXT_REPLY)
+# @telegtam_bot.message_handler(content_types=['text'])
+# def common_reply(message):
+#     TEXT_REPLY = """Команда не распознана."""
+#     telegtam_bot.reply_to(message, TEXT_REPLY)

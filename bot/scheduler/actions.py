@@ -13,27 +13,29 @@ from .constants import (
 def schedule_task(
     function: str,
     execute_dttm: datetime,
+    task_id: str = None,
     arguments: dict = None,
     regular_task: bool = False,
 ):
-    if not regular_task:
-        return scheduler.add_job(
-            func=function,
-            trigger='date',
-            run_date=execute_dttm,
-            kwargs=arguments
+    if regular_task:
+        trigger = CronTrigger(
+            minute=execute_dttm.minute,
+            hour=execute_dttm.hour,
         )
+    else:
+        trigger = 'date'
 
-    cron_trigger = CronTrigger(
-        minute=execute_dttm.minute,
-        hour=execute_dttm.hour,
-    )
     return scheduler.add_job(
+        id=task_id,
         func=function,
-        trigger=cron_trigger,
+        trigger=trigger,
         run_date=execute_dttm,
         kwargs=arguments
     )
+
+
+def unschedule_task(task_id: str):
+    return scheduler.remove_job(task_id)
 
 
 def get_task_text_representation(task):

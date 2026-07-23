@@ -6,6 +6,7 @@ Note that EVERY bot command should have only 2 arguments:
 
 every function must be registered to be used.
 """
+
 from weather.queries import get_user_location
 from weather.actions import forecast
 
@@ -67,6 +68,7 @@ def send_help(user_id, argument=None):
         'plan', 'запланируй',
         'delete', 'удалить',
         'tasks', 'задачи',
+        'work', 'работа',
     }
 
     need_full_help = not argument or argument not in (HELP_ACTIONS)
@@ -164,6 +166,16 @@ def send_help(user_id, argument=None):
             ✏️__Примеры команды__:
              --> /delete 13
              --> /delete 91
+        """
+
+    if need_full_help or argument in {'work', 'работа'}:
+        HELP_TEXT += """
+            🚀 /work
+            Инициализирует скрипт трекинга рабочего времени.
+            По умолчанию выделяет 50 минут на работу и 10 минут на отдых.
+            ✏️__Примеры команды__:
+             --> /work
+             --> /работа
         """
 
     send_message(user_id, HELP_TEXT.replace('    ', ''))

@@ -30,14 +30,15 @@ def set_up_schedule():
             print(f'No Task named {task.function}')
             continue
         schedule_task(
-            function_to_schedule,
+            task_id=str(task.id),
+            function=function_to_schedule,
             execute_dttm=task.execute_dttm,
             arguments=task.arguments,
             regular_task=task.regular_task
         )
 
     # schedule greeting message.
-    greeting_time = datetime.now() + timedelta(seconds=5)
+    greeting_time = datetime.now() + timedelta(seconds=3)
     greeting_text = f"""
         Bot is up and running! 🤖🎶
 

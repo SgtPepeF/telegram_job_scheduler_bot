@@ -1,6 +1,6 @@
 venv
 .env
 .git
-db.sqlite3
+.db
 .vscode
 __pycache__

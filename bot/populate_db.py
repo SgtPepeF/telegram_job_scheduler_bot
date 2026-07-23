@@ -7,7 +7,6 @@ from weather.queries import create_location
 
 from settings import (
     ADMIN_TELEGRAM_ID,
-    ADMIN_USERNAME,
     DEFAULT_OPENWEATHER_REGION,
 )
 
@@ -20,7 +19,6 @@ try:
     create_user(
         user_kwargs={
             'user_id': ADMIN_TELEGRAM_ID,
-            'username': ADMIN_USERNAME,
         }
     )
 except ValueError as user_exists:

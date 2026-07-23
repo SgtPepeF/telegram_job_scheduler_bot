@@ -6,7 +6,7 @@
 • Отправка прогноз погоды по запросу;  
 • Планирование разовое/регулярное сообщений;  
 • Планирование разовое/регулярное действий из списка доступных действий бота;  
-• рекер рабочего времени (в разработке).  
+• Трекер рабочего времени.  
 
 ![git_images/telegram_bot_preview.jpg](https://github.com/SgtPepeF/telegram_job_scheduler_bot/blob/51e023398b06fc893be40e3f0a6862cdf90f5cf2/git_images/telegram_bot_preview.jpg)
 
@@ -46,4 +46,4 @@ python bot/main.py
 ```
 Начните общение с ботом в чате телеграма с команды ```/start```. Бот отправит Вам дальнейшие инструкции по работе с ним.
 
-![/stert example](https://github.com/SgtPepeF/telegram_job_scheduler_bot/blob/51e023398b06fc893be40e3f0a6862cdf90f5cf2/git_images/boot_greeting_message.jpg)
+![/start example](https://github.com/SgtPepeF/telegram_job_scheduler_bot/blob/51e023398b06fc893be40e3f0a6862cdf90f5cf2/git_images/boot_greeting_message.jpg)
